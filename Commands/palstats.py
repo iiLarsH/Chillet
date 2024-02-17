@@ -48,6 +48,7 @@ class PalStats(commands.Cog):
         GeneralStats.add_field(name="♂️/♀️", value=f"{str(maleprob)}" + "/" + f"{str(100 - maleprob)}", inline=False)
         GeneralStats.add_field(name="Breedingpower", value=f"{breedingpower}", inline=True)
         GeneralStats.set_footer(text="Lower breedingpower is better")
+        GeneralStats.set_thumbnail(url=f"{img[0]}")
         pages.append(GeneralStats)
 
         Combat = discord.Embed(title="PalStats: Combat", description=f"**PalDeckNr**: {str(paldecknr) + str(palnr_suffix)}\n**Palname**: {name}", colour=discord.Colour.red())
@@ -55,6 +56,7 @@ class PalStats(commands.Cog):
         Combat.add_field(name="ATK", value=f"<:ATK:1208242876304195715>{rangeatk}", inline=True)
         Combat.add_field(name="DEF", value=f"<:DEF:1208242878934159390>{defense}", inline=False)
         Combat.add_field(name="Wild Pal Response", value=f"{ai_response}", inline=True)
+        Combat.set_thumbnail(url=f"{img[0]}")
         pages.append(Combat)
 
         Mount = discord.Embed(title="PalStats: Mount", description=f"**PalDeckNr**: {str(paldecknr) + str(palnr_suffix)}\n**Palname**: {name}", colour=discord.Colour.orange())
@@ -66,17 +68,20 @@ class PalStats(commands.Cog):
         Mount.add_field(name="Run Speed", value=f"{run_speed}", inline=True)
         Mount.add_field(name="Ride Sprint Speed", value=f"{ride_sprint_speed}", inline=True)
         Mount.set_footer(text="Slow walk speed refers to speed while overburdend")
+        Mount.set_thumbnail(url=f"{img[0]}")
         pages.append(Mount)
 
         Work = discord.Embed(title="PalStats: Work", description=f"**PalDeckNr**: {str(paldecknr) + str(palnr_suffix)}\n**Palname**: {name}", colour=discord.Colour.teal())
         Work.add_field(name="Max Stomach", value=f"<:MaxFood:1208243345672114176>{max_stomach}", inline=True)
         Work.add_field(name="Food consumption", value=f"{get_foodbar(food_amount)}", inline=True)
         Work.add_field(name="Worktype and level", value=f"{get_work(work_levels)}", inline=False)
+        Work.set_thumbnail(url=f"{img[0]}")
         pages.append(Work)
 
         Partner_skill = discord.Embed(title="PalStats: Partner Skill", description=f"**PalDeckNr**: {str(paldecknr) + str(palnr_suffix)}\n**Palname**: {name}", colour=discord.Colour.dark_purple())
         Partner_skill.add_field(name="Partner skill name", value=f"{partnerskill}", inline=False)
         Partner_skill.add_field(name="Description", value=f"{description}", inline=False)
+        Partner_skill.set_thumbnail(url=f"{img[0]}")
         pages.append(Partner_skill)
 
         await interaction.response.send_message(embed=pages[0], view=ButtonMenu(pages, 60, interaction.user))
