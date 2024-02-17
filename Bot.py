@@ -18,6 +18,7 @@ async def load():
 
 @client.command()
 async def sync(ctx):
+    print("start sync")
     if ctx.message.author.id == 262672220260663297:
         synced = await client.tree.sync()
         print(f'You synced {str(len(synced))} commands')

@@ -10,8 +10,8 @@ class Palbox_remove(commands.Cog):
     async def on_ready(self):
         print("palbox_remove.py is ready")
 
-    @app_commands.command(name="palbox_remove", description="Gives the bot latency in ms.")
-    async def slashping(self, interaction: discord.Interaction):
+    @app_commands.command(name="palbox_remove", description="Removes a pal from players Palbox")
+    async def palbox_remove(self, interaction: discord.Interaction, id: int, save: str):
         bot_latency = round(self.client.latency * 1000)
         await interaction.response.send_message(f"pong! {bot_latency}ms.")
 
