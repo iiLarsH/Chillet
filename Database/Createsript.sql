@@ -1,0 +1,56 @@
+-- CREATE TABLE pal(
+--     paldecknr INTEGER NOT NULL,
+--     palnr_suffix CHAR NULL,
+--     name TEXT NOT NULL,
+--     size TEXT NOT NULL,
+--     element_1 TEXT NOT NULL,
+--     element_2 TEXT NULL,
+--     hp INTEGER NOT NULL,
+--     melee_atk INTEGER NOT NULL,
+--     range_atk INTEGER NOT NULL,
+--     defense INTEGER NOT NULL,
+--     support INTEGER NOT NULL,
+--     craftspeed INTEGER NOT NULL,
+--     ai_response TEXT NOT NULL,
+--     slow_walk_speed INTEGER NOT NULL,
+--     walk_speed INTEGER NOT NULL,
+--     run_speed INTEGER NOT NULL,
+--     ride_sprint_speed INTEGER NOT NULL,
+--     max_stomach INTEGER NOT NULL,
+--     food_amount INTEGER NOT NULL,
+--     nocturnal BOOLEAN NOT NULL,
+--     stamina INTEGER NOT NULL,
+--     maleprob INTEGER NOT NULL,
+--     breedingpower INTEGER NOT NULL,
+--     igniting INTEGER NOT NULL,
+--     watering INTEGER NOT NULL,
+--     planting INTEGER NOT NULL,
+--     electricity INTEGER NOT NULL,
+--     handiwork INTEGER NOT NULL,
+--     gathering INTEGER NOT NULL,
+--     logging INTEGER NOT NULL,
+--     mining INTEGER NOT NULL,
+--     extracting_oil INTEGER NOT NULL,
+--     medicine INTEGER NOT NULL,
+--     cooling INTEGER NOT NULL,
+--     transporting INTEGER NOT NULL,
+--     farming INTEGER NOT NULL,
+--     mount BOOLEAN NULL,
+--     mounttype TEXT NULL,
+--     PRIMARY KEY(paldecknr, name)
+-- );
+
+-- CREATE TABLE pal_images(
+--     paldecknr INTEGER NOT NULL,
+--     name TEXT NOT NULL,
+--     imagelink NOT NULL,
+--     PRIMARY KEY(paldecknr, name)
+-- );
+
+-- CREATE TABLE pal_partner_skills(
+--     paldecknr INTEGER NOT NULL,
+--     name TEXT NOT NULL,
+--     partnerskill TEXT NOT NULL,
+--     description TEXT NOT NULL,
+--     PRIMARY KEY(paldecknr, name)
+-- );
