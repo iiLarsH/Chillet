@@ -54,3 +54,4 @@
 --     description TEXT NOT NULL,
 --     PRIMARY KEY(paldecknr, name)
 -- );
+

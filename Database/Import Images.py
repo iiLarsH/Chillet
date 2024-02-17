@@ -3,12 +3,12 @@ import csv, sqlite3
 con = sqlite3.connect("Database/Paldata.db")
 cur = con.cursor()
 
-with open("image import.csv") as datafile:
+with open("csv's/image import.csv") as datafile:
     data = csv.DictReader(datafile)
     for i in data:
         paldecknr = int(i['ZukanIndex'])
         name = i['Name']
-        imagelink = i['ImageLink']
+        imagelink = i['imagelink']
 
         to_db = [
             paldecknr,
