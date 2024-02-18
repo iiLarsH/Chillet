@@ -55,3 +55,9 @@
 --     PRIMARY KEY(paldecknr, name)
 -- );
 
+-- CREATE TABLE all_combo_pal_breeding(
+--     parent1 TEXT NOT NULL,
+--     parent2 TEXT NOT NULL,
+--     child TEXT NOT NULL,
+--     PRIMARY KEY(parent1, parent2)
+-- )
