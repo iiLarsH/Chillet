@@ -20,6 +20,7 @@ class BreedingCalc(commands.Cog):
 
         data_child = cur.execute("SELECT child FROM all_combo_pal_breeding WHERE parent1 = ? and parent2 = ?", (parent1, parent2,))
         name_child = data_child.fetchone()
+        name_child = name_child[0]
 
         data_parent1 = cur.execute("SELECT paldecknr, palnr_suffix, name FROM pal WHERE name = ?", (parent1,))        
         paldecknr1, palnr_suffix1, name1 = data_parent1.fetchone()
