@@ -1,6 +1,7 @@
 import os
 from discord.ext import commands
 from discord import app_commands
+from HiddenMap import get_token
 import discord
 import asyncio
 
@@ -32,6 +33,6 @@ async def on_app_command_error(interaction, error):
 async def main():
     async with client:
         await load()
-        await client.start("MTIwODA3OTQ1NDI3OTA0NTE5MA.G3Nng2.zpvVbQV4kLTVP9okrsbj3DDXyZDRtXmeRiy9Es")
+        await client.start(get_token())
 
 asyncio.run(main())

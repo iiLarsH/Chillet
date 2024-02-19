@@ -1,47 +1,57 @@
-import csv, sqlite3
+import sqlite3
 
-con = sqlite3.connect("Database/Paldata.db")
-cur = con.cursor()
+def calc(parent1, parent2):
+    con = sqlite3.connect("Database/Paldata.db")
+    cur = con.cursor()
+    unique_Combo = False
 
-with open("csv's/Palworld breeding All Combos.csv") as datafile:
-    data = csv.DictReader(datafile)
+    data_child = cur.execute("SELECT child FROM unique_combo WHERE parent1 = ? and parent2 = ?", (parent1, parent2,))
+    name_child = data_child.fetchone()
 
-    count = 0
-    for i in data:
-        if(count == 0):
-            parent1 = i['1']
-            parent2 = list(i.values())
-            count+=1
-        else:
-            child = i['1']
-            message = parent1 + f" + {parent2[count]} = " + child
-            count+=1
-            print(message)
+    if(name_child is None):
+        unique_Combo = True
+    else:
+        name_child = name_child[0]
 
-    #     to_db = [
-    #         parent1,
-    #         parent2,
-    #         child
-    #     ]
-    #     cur.execute("INSERT INTO pal_images VALUES(?, ?, ?);", to_db)
-    # con.commit()
-    # con.close()    
+    data_parent1 = cur.execute("SELECT paldecknr, palnr_suffix, name, breedingpower FROM pal WHERE name = ?", (parent1,))        
+    paldecknr1, palnr_suffix1, name1, breedingpower1 = data_parent1.fetchone()
 
-import csv, sqlite3
+    data_parent2 = cur.execute("SELECT paldecknr, palnr_suffix, name, breedingpower FROM pal WHERE name = ?", (parent2,))
+    paldecknr2, palnr_suffix2, name2, breedingpower2 = data_parent2.fetchone()
 
-con = sqlite3.connect("Database/Paldata.db")
-cur = con.cursor()
+    if(unique_Combo):    
+        breedingpower_child = (breedingpower1+breedingpower2)/2
+        data_child  = cur.execute("SELECT paldecknr, palnr_suffix, name FROM pal WHERE palnr_suffix is NULL AND name NOT IN (SELECT child FROM unique_combo) ORDER BY ABS(? - breedingpower) LIMIT 1", (breedingpower_child,))
+        paldecknr_child, palnr_suffix_child, name_child = data_child.fetchone()
 
-with open("csv's/Palworld breeding All Combos.csv") as datafile:
-    data = csv.DictReader(datafile)
+    else:
+        data_child = cur.execute("Select paldecknr, palnr_suffix, name FROM pal WHERE name = ?", (name_child,))
+        paldecknr_child, palnr_suffix_child, name_child = data_child.fetchone()
+        
+    con.close()
 
-    for i in data:
-        if(i['0'] != ""):
-            y_axis = i['0'] # Y axis
-            print(y_axis)
+    return name1, name2, name_child
 
-    # count = 1 
-    # for i in data:
-    #     x_axis = list(i.values()) # Y axis
-    #     print(x_axis[count])
-    # # Y axis of all pal names
+def fill_all_combo():
+    con = sqlite3.connect("Database/Paldata.db")
+    cur = con.cursor()
+
+    all_names = cur.execute("SELECT name FROM pal")
+    namelist1 = all_names.fetchall()
+    namelist2 = namelist1
+
+    all_combo_list = []
+    for i in namelist1:
+        parent1 = i[0]
+        for j in namelist2:
+            parent2 = j[0]
+            parentname1, parentname2, childname = calc(parent1, parent2)
+            combotuple = (parentname1, parentname2, childname)
+            all_combo_list.append(combotuple)
+
+    #print(all_combo_list)
+    cur.executemany("INSERT INTO all_combo_pal_breeding(parent1, parent2, child) VALUES(?,?,?)", all_combo_list)
+    con.commit()
+    con.close()
+
+fill_all_combo()

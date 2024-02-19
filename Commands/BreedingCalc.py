@@ -17,31 +17,18 @@ class BreedingCalc(commands.Cog):
     async def breeding_calc(self, interaction: discord.Interaction, parent1: str, parent2: str):
         con = sqlite3.connect("Database/Paldata.db")
         cur = con.cursor()
-        unique_Combo = False
 
-        data_child = cur.execute("SELECT child FROM unique_combo WHERE parent1 = ? and parent2 = ?", (parent1, parent2,))
+        data_child = cur.execute("SELECT child FROM all_combo_pal_breeding WHERE parent1 = ? and parent2 = ?", (parent1, parent2,))
         name_child = data_child.fetchone()
 
-        if(name_child == "None"):
-            unique_Combo = True
-        else:
-            name_child = name_child[0]
+        data_parent1 = cur.execute("SELECT paldecknr, palnr_suffix, name FROM pal WHERE name = ?", (parent1,))        
+        paldecknr1, palnr_suffix1, name1 = data_parent1.fetchone()
 
+        data_parent2 = cur.execute("SELECT paldecknr, palnr_suffix, name FROM pal WHERE name = ?", (parent2,))
+        paldecknr2, palnr_suffix2, name2 = data_parent2.fetchone()
 
-        data_parent1 = cur.execute("SELECT paldecknr, palnr_suffix, name, breedingpower FROM pal WHERE name = ?", (parent1,))        
-        paldecknr1, palnr_suffix1, name1, breedingpower1 = data_parent1.fetchone()
-
-        data_parent2 = cur.execute("SELECT paldecknr, palnr_suffix, name, breedingpower FROM pal WHERE name = ?", (parent2,))
-        paldecknr2, palnr_suffix2, name2, breedingpower2 = data_parent2.fetchone()
-
-        if(unique_Combo):    
-            breedingpower_child = (breedingpower1+breedingpower2)/2
-            data_child  = cur.execute("SELECT paldecknr, palnr_suffix, name FROM pal WHERE palnr_suffix is NULL ORDER BY ABS(? - breedingpower) LIMIT 1", (breedingpower_child,))
-            paldecknr_child, palnr_suffix_child, name_child = data_child.fetchone()
-
-        else:
-            data_child = cur.execute("Select paldecknr, palnr_suffix, name FROM pal WHERE name = ?", (name_child,))
-            paldecknr_child, palnr_suffix_child, name_child = data_child.fetchone()
+        data_child = cur.execute("Select paldecknr, palnr_suffix, name FROM pal WHERE name = ?", (name_child,))
+        paldecknr_child, palnr_suffix_child, name_child = data_child.fetchone()
 
         data = cur.execute("SELECT imagelink FROM pal_images WHERE name = ?", (name_child,))
         img = data.fetchone()

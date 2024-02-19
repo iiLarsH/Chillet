@@ -68,3 +68,5 @@
 --     child TEXT NOT NULL,
 --     PRIMARY KEY(parent1, parent2)
 -- )
+
+SELECT * FROM unique_combo
