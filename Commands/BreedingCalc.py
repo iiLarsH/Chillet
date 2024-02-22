@@ -4,6 +4,7 @@ from discord.ext import commands
 from discord import app_commands
 from ReusedFunctions.ButtonMenu import ButtonMenu
 from ReusedFunctions.CreateStatPages import create_stat_pages
+from ReusedFunctions.GetAllPals import get_all_pals
 
 class BreedingCalc(commands.Cog):
     def __init__(self, client):
@@ -60,9 +61,7 @@ class BreedingCalc(commands.Cog):
     @breeding_calc.autocomplete("parent1")
     async def autocomplete_parent1(self, interaction: discord.Interaction, current: str) -> list[app_commands.Choice[str]]:
         data = []
-        con = sqlite3.connect("Database/Paldata.db")
-        cur = con.cursor()
-        palnames = cur.execute("SELECT name FROM pal")
+        palnames = get_all_pals()
         for palname in palnames.fetchall():
             if current.lower() in palname[0].lower():
                 data.append(app_commands.Choice(name=palname[0], value=palname[0]))
@@ -71,9 +70,7 @@ class BreedingCalc(commands.Cog):
     @breeding_calc.autocomplete("parent2")
     async def autocomplete_parent2(self, interaction: discord.Interaction, current: str) -> list[app_commands.Choice[str]]:
         data = []
-        con = sqlite3.connect("Database/Paldata.db")
-        cur = con.cursor()
-        palnames = cur.execute("SELECT name FROM pal")
+        palnames = get_all_pals()
         for palname in palnames.fetchall():
             if current.lower() in palname[0].lower():
                 data.append(app_commands.Choice(name=palname[0], value=palname[0]))

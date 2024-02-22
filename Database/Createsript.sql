@@ -68,3 +68,9 @@
 --     child TEXT NOT NULL,
 --     PRIMARY KEY(parent1, parent2)
 -- )
+
+-- CREATE TABLE palname_to_code(
+--     name TEXT NOT NULL,
+--     code TEXT NOT NULL,
+--     PRIMARY KEY(name, code)
+-- )
